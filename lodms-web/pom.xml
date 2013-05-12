@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>lodms</artifactId>
@@ -13,12 +14,11 @@
 
     <name>LODMS Web Application</name>
     <url>https://github.com/lodms/lodms-core</url>
-    
+
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vaadin.version>6.8.9</vaadin.version>
-        <project.version>1.0.0</project.version>
     </properties>
 
     <repositories>
@@ -42,6 +42,16 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>lodms-spi</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>lodms-ckan-extractor</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>lodms-virtuoso-connector</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -89,11 +99,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>lodms-impl</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>lodms-poolparty</artifactId>
-            <version>3.1.2</version>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -198,46 +203,44 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
-            <!-- Compiles your custom GWT components with the GWT compiler 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <version>2.3.0</version>
-                <configuration>
-                    <webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory>
-                    <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-                    <runTarget>clean</runTarget>
-                    <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
-                    <noServer>true</noServer>
-                    <port>8084</port>
-                    <soyc>false</soyc>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>resources</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-        <!-- Updates Vaadin 6.2+ widgetset definitions based on project dependencies 
-            <plugin>
-                <groupId>com.vaadin</groupId>
-                <artifactId>vaadin-maven-plugin</artifactId>
-                <version>1.0.2</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                        </configuration>
-                        <goals>
-                            <goal>update-widgetset</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
+            <!-- Compiles your custom GWT components with the GWT compiler -->
+            <!--<plugin>-->
+            <!--<groupId>org.codehaus.mojo</groupId>-->
+            <!--<artifactId>gwt-maven-plugin</artifactId>-->
+            <!--<version>2.2.0</version>-->
+            <!--<configuration>-->
+            <!--<webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory>-->
+            <!--<extraJvmArgs>-Xmx1024M -Xss1024k</extraJvmArgs>-->
+            <!--<runTarget>clean</runTarget>-->
+            <!--<hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>-->
+            <!--<noServer>true</noServer>-->
+            <!--<port>8084</port>-->
+            <!--<soyc>false</soyc>-->
+            <!--</configuration>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<goals>-->
+            <!--<goal>resources</goal>-->
+            <!--<goal>compile</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
+            <!--&lt;!&ndash; Updates Vaadin 6.2+ widgetset definitions based on project dependencies &ndash;&gt;-->
+            <!--<plugin>-->
+            <!--<groupId>com.vaadin</groupId>-->
+            <!--<artifactId>vaadin-maven-plugin</artifactId>-->
+            <!--<version>1.0.2</version>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<configuration>-->
+            <!--</configuration>-->
+            <!--<goals>-->
+            <!--<goal>update-widgetset</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
         <resources>
             <resource>
