@@ -48,7 +48,7 @@
         <constructor-arg index="1" value="dba"/>
         <constructor-arg index="2" value="dba"/>
         <constructor-arg index="3" type="boolean">
-            <value>false</value>
+            <value>true</value>
         </constructor-arg>
     </bean>
 </beans>
