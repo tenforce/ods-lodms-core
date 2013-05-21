@@ -49,7 +49,7 @@
         </repository>
 
         <repository>
-            <id>tenforce_external_free</id>
+            <id>tenforce_archiva_external_free</id>
             <url>http://archiva.tenforce.com/archiva/repository/external_free/</url>
         </repository>
     </repositories>
