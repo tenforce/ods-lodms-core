@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>at.punkt.lodms</groupId>
     <artifactId>lodms</artifactId>
@@ -10,7 +11,7 @@
         <module>lodms-spi</module>
         <module>lodms-web-integration</module>
         <module>lodms-web</module>
-  </modules>
+    </modules>
 
     <build>
         <plugins>
@@ -46,6 +47,11 @@
             <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
             <url>http://repository.springsource.com/maven/bundles/external</url>
         </repository>
+
+        <repository>
+            <id>tenforce_archiva_fallback</id>
+            <url>http://archiva.tenforce.com/archiva/repository/fallback</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -63,7 +69,10 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sesame.version>2.6.10</sesame.version>
+        <sesame.version>2.7.0</sesame.version>
         <spring.version>3.1.2.RELEASE</spring.version>
+        <project.version>1.0.0</project.version>
+        <virtuoso-jdbc-driver.version>3.60</virtuoso-jdbc-driver.version>
+        <virtuoso-sesame-driver.version>2.0</virtuoso-sesame-driver.version>
     </properties>
 </project>

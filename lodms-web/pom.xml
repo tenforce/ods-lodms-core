@@ -36,11 +36,6 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>lodms-any23-connector</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>lodms-spi</artifactId>
             <version>${project.version}</version>
         </dependency>
@@ -53,11 +48,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>lodms-virtuoso-connector</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openrdf.sesame</groupId>
-            <artifactId>sesame-rio-n3</artifactId>
-            <version>${sesame.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openrdf.sesame</groupId>
