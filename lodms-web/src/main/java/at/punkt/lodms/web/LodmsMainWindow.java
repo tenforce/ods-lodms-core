@@ -4,10 +4,10 @@
  */
 package at.punkt.lodms.web;
 
+import at.punkt.lodms.web.dialog.AboutDialog;
 import at.punkt.lodms.web.dialog.Dialog;
 import at.punkt.lodms.web.dialog.DialogCloseHandler;
-import at.punkt.lodms.web.dialog.AboutDialog;
-import at.punkt.lodms.web.LodmsApplication;
+import at.punkt.lodms.web.dialog.SupportDialog;
 import at.punkt.lodms.web.view.ErrorReportingView;
 import at.punkt.lodms.web.view.ExistingJobsView;
 import at.punkt.lodms.web.view.NewJobView;
@@ -18,14 +18,12 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.Window;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 /**
- *
  * @author Alex Kreiser (akreiser@gmail.com)
  */
 @Component
@@ -36,23 +34,25 @@ public class LodmsMainWindow extends Window {
     private final static int MAIN_ROW = 2;
     private final static int MENU_ROW = 1;
     private GridLayout layout;
-    
+
     @Autowired
     private ExistingJobsView jobsView;
     @Autowired
     private ErrorReportingView errorView;
     @Autowired
     private AboutDialog aboutDialog;
-    
+    @Autowired
+    private SupportDialog supportDialog;
+
     @Autowired
     private ApplicationContext context;
     @Autowired
     private String applicationVersion;
 
     public void init() {
-        setCaption("LOD Management Suite " + applicationVersion);
+        setCaption("Open Data Interoperability Platform " + applicationVersion);
         setWidth("100%");
-        
+
         initLayout();
         initHeader();
         initMenu();
@@ -65,14 +65,14 @@ public class LodmsMainWindow extends Window {
         layout.setRowExpandRatio(MAIN_ROW, 1.0f);
         setContent(layout);
     }
-    
+
     private void initHeader() {
         CssLayout header = new CssLayout();
         header.setMargin(true);
         header.setHeight("15px");
-        header.setCaption("LOD Management Suite");
+        header.setCaption("Open Data Interoperability Platform");
         header.addStyleName("lodms-header");
-        header.setIcon(new ClassResource("/at/punkt/lodms/logo.png", getApplication()));
+        header.setIcon(new ClassResource("/com/tenforce/lodms/ods/logo.png", getApplication()));
         addComponent(header);
     }
 
@@ -83,10 +83,16 @@ public class LodmsMainWindow extends Window {
         menu.addItem("New Job", new ThemeResource("../runo/icons/16/document.png"), new ShowDialogCommand(NewJobView.class, jobsView));
         menu.addItem("Manage Jobs", new ThemeResource("../runo/icons/16/settings.png"), new SwitchViewCommand(jobsView));
         menu.addItem("Error Reports", new ThemeResource("../runo/icons/16/attention.png"), new SwitchViewCommand(errorView));
+        menu.addItem("Get Support", new ThemeResource("../runo/icons/16/note.png"), new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem selectedItem) {
+                ((LodmsApplication) getApplication()).showDialog(supportDialog);
+            }
+        });
         menu.addItem("About", new ThemeResource("../runo/icons/16/help.png"), new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem selectedItem) {
-                ((LodmsApplication)getApplication()).showDialog(aboutDialog);
+                ((LodmsApplication) getApplication()).showDialog(aboutDialog);
             }
         });
         layout.addComponent(menu, MAIN_COLUMN, MENU_ROW);

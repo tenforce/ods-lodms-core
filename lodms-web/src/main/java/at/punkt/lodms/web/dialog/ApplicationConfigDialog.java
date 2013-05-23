@@ -12,20 +12,20 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.AbstractStringValidator;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Button.ClickEvent;
-import java.io.File;
 import org.apache.log4j.Logger;
 
+import java.io.File;
+
 /**
- *
  * @author Alex Kreiser (akreiser@gmail.com)
  */
 public class ApplicationConfigDialog extends Window {
 
     private final Logger logger = Logger.getLogger(ApplicationConfigDialog.class);
     private LodmsConfig config = new LodmsConfig();
-    
+
     public class LodmsConfig {
-        
+
         private String homeDirectory = "";
 
         public String getHomeDirectory() {
@@ -38,12 +38,12 @@ public class ApplicationConfigDialog extends Window {
     }
 
     public ApplicationConfigDialog(final ApplicationConfig appConfig, final JobService jobService) {
-        super("LOD Management Suite Configuration");
+        super("Open Data Interoperability Platform Configuration");
         setModal(true);
         VerticalLayout layout = new VerticalLayout();
         addComponent(layout);
         setWidth("600px");
-        Label label = new Label("The data directory of your LOD Management Suite installation is not set yet. "
+        Label label = new Label("The data directory of your Open Data Interoperability Platform installation is not set yet. "
                 + "Please set a valid path to a writable directory outside of the web application.");
         label.addStyleName("lodms-config-info");
         layout.addComponent(label);
@@ -63,16 +63,16 @@ public class ApplicationConfigDialog extends Window {
                             try {
                                 File file = new File(value);
                                 if (!file.exists()) {
-                                    setErrorMessage("Path "+file.getAbsolutePath()+" does not exist.");
+                                    setErrorMessage("Path " + file.getAbsolutePath() + " does not exist.");
                                     return false;
                                 } else if (!file.isDirectory()) {
-                                    setErrorMessage(file.getAbsolutePath()+" is not a directory.");
+                                    setErrorMessage(file.getAbsolutePath() + " is not a directory.");
                                     return false;
                                 } else if (!file.canRead()) {
-                                    setErrorMessage("Folder "+file.getAbsolutePath()+" cannot be read by LODMS.");
+                                    setErrorMessage("Folder " + file.getAbsolutePath() + " cannot be read by LODMS.");
                                     return false;
                                 } else if (!file.canWrite()) {
-                                    setErrorMessage("Folder "+file.getAbsolutePath()+" is not writable by LODMS.");
+                                    setErrorMessage("Folder " + file.getAbsolutePath() + " is not writable by LODMS.");
                                     return false;
                                 }
                                 return true;
@@ -86,7 +86,7 @@ public class ApplicationConfigDialog extends Window {
                 }
                 return super.createField(item, propertyId, uiContext);
             }
-            
+
         });
         form.setItemDataSource(new BeanItem<LodmsConfig>(config));
         layout.addComponent(form);
