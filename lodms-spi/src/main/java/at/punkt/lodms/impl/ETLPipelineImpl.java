@@ -1,28 +1,30 @@
 package at.punkt.lodms.impl;
 
-import at.punkt.lodms.*;
-import at.punkt.lodms.spi.transform.TransformCompletedEvent;
-import at.punkt.lodms.spi.load.Loader;
-import at.punkt.lodms.spi.load.LoadException;
-import at.punkt.lodms.spi.transform.Transformer;
-import at.punkt.lodms.spi.transform.TransformException;
+import at.punkt.lodms.Disableable;
+import at.punkt.lodms.ETLEvent;
+import at.punkt.lodms.ETLPipeline;
+import at.punkt.lodms.PipelineAbortedEvent;
+import at.punkt.lodms.PipelineCompletedEvent;
+import at.punkt.lodms.PipelineStartedEvent;
+import at.punkt.lodms.ProcessingContext;
 import at.punkt.lodms.spi.extract.ExtractCompletedEvent;
-import at.punkt.lodms.spi.extract.Extractor;
-import at.punkt.lodms.spi.extract.ExtractException;
-import at.punkt.lodms.spi.transform.TransformFailedEvent;
-import at.punkt.lodms.spi.extract.ExtractFailedEvent;
-import at.punkt.lodms.spi.load.LoadFailedEvent;
 import at.punkt.lodms.spi.extract.ExtractContext;
+import at.punkt.lodms.spi.extract.ExtractException;
+import at.punkt.lodms.spi.extract.ExtractFailedEvent;
+import at.punkt.lodms.spi.extract.Extractor;
 import at.punkt.lodms.spi.load.LoadCompletedEvent;
 import at.punkt.lodms.spi.load.LoadContext;
+import at.punkt.lodms.spi.load.LoadException;
+import at.punkt.lodms.spi.load.LoadFailedEvent;
+import at.punkt.lodms.spi.load.Loader;
+import at.punkt.lodms.spi.transform.TransformCompletedEvent;
 import at.punkt.lodms.spi.transform.TransformContext;
+import at.punkt.lodms.spi.transform.TransformException;
+import at.punkt.lodms.spi.transform.TransformFailedEvent;
+import at.punkt.lodms.spi.transform.Transformer;
+import at.punkt.lodms.util.BatchedRdfInserter;
 import at.punkt.lodms.util.NoStartEndWrapper;
 import at.punkt.lodms.util.TripleCountingWrapper;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import org.apache.log4j.Logger;
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.URIImpl;
@@ -34,32 +36,38 @@ import org.openrdf.rio.RDFHandlerException;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 /**
  * Represents a fixed workflow composed of one or several {@link Extractor}s,
  * {@link Transformer}s and {@link Loader}s executed in a fixed order.
- *
+ * <p/>
  * Processing will always take place in the following order: 1. Execute all
  * {@link Extractor}s in the order of the {@link List} If an Extractor throws an
  * error publish an {@link ExtractFailedEvent} - otherwise publish an
  * {@link ExtractCompletedEvent}. If an Extractor requests cancellation of the
  * pipeline through {@link ProcessingContext#cancelPipeline} publish a
  * {@link PipelineAbortedEvent} and exit.
- *
+ * <p/>
  * 2. Execute all {@link Transformer}s in the order of the {@link List} If a
  * Transformer throws an error publish an {@link TransformFailedEvent} -
  * otherwise publish an {@link TransformCompletedEvent}. If a Transformer
  * requests cancellation of the pipeline through
  * {@link ProcessingContext#cancelPipeline} publish a
  * {@link PipelineAbortedEvent} and exit.
- *
+ * <p/>
  * 3. Execute all {@link Loader}s in the order of the {@link List} If a Loader
  * throws an error publish an {@link LoadFailedEvent} - otherwise publish an
  * {@link LoadCompletedEvent}. If a Loader requests cancellation of the pipeline
  * through {@link ProcessingContext#cancelPipeline} publish a
  * {@link PipelineAbortedEvent} and exit.
- *
+ * <p/>
  * 4. Publish a {@link PipelineCompletedEvent}
- *
+ * <p/>
  * A Spring {@link ApplicationEventPublisher} is required for propagation of
  * important events occurring thoughout the pipeline. Also, a {@link Repository}
  * instance capable of storing named graphs is essential for this pipeline to
@@ -67,10 +75,10 @@ import org.springframework.context.ApplicationEventPublisherAware;
  * repository and accessed / manipulated by the {@link Transformer}s before it
  * is exported by the {@link Loader}s.
  *
+ * @author Alex Kreiser (akreiser@gmail.com)
  * @see Extractor
  * @see Transformer
  * @see Loader
- * @author Alex Kreiser (akreiser@gmail.com)
  */
 public class ETLPipelineImpl implements ETLPipeline, ApplicationEventPublisherAware {
 
@@ -86,10 +94,10 @@ public class ETLPipelineImpl implements ETLPipeline, ApplicationEventPublisherAw
     /**
      * Constructor
      *
-     * @param id The identifier of this pipeline, will be used as named graph
-     * where all the RDF data of this pipeline will be cached
+     * @param id             The identifier of this pipeline, will be used as named graph
+     *                       where all the RDF data of this pipeline will be cached
      * @param eventPublisher Publisher for {@link ETLEvent}s
-     * @param repository Repository functioning as RDF cache
+     * @param repository     Repository functioning as RDF cache
      */
     public ETLPipelineImpl(String id, ApplicationEventPublisher eventPublisher, Repository repository) {
         this.id = id;
@@ -125,9 +133,9 @@ public class ETLPipelineImpl implements ETLPipeline, ApplicationEventPublisherAw
     }
 
     private void runExtractors(String runId, URI namedGraph, Map<String, Object> customData) throws RepositoryException, RDFHandlerException {
-        RepositoryConnection con = repository.getConnection();
+        final RepositoryConnection con = repository.getConnection();
         con.setAutoCommit(false);
-        RDFInserter inserter = new RDFInserter(con);
+        RDFInserter inserter = new BatchedRdfInserter(con, 5000);
         inserter.enforceContext(namedGraph);
         NoStartEndWrapper wrapper = new NoStartEndWrapper(inserter);
         try {
@@ -137,7 +145,7 @@ public class ETLPipelineImpl implements ETLPipeline, ApplicationEventPublisherAw
                 }
                 ExtractContext context = new ExtractContext(runId, customData);
                 context.setPipeline(this);
-                TripleCountingWrapper tripleCounter = new TripleCountingWrapper(wrapper);
+                TripleCountingWrapper tripleCounter = new TripleCountingWrapper(inserter);
                 try {
                     long start = System.currentTimeMillis();
                     extractor.extract(tripleCounter, context);

@@ -73,6 +73,6 @@
         <spring.version>3.1.2.RELEASE</spring.version>
         <project.version>1.0.0</project.version>
         <virtuoso-jdbc-driver.version>3.62</virtuoso-jdbc-driver.version>
-        <virtuoso-sesame-driver.version>2.6.10</virtuoso-sesame-driver.version>
+        <virtuoso-sesame-driver.version>2.6.10-build1.10</virtuoso-sesame-driver.version>
     </properties>
 </project>
