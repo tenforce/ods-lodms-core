@@ -10,7 +10,7 @@
 
     <groupId>at.punkt.lodms</groupId>
     <artifactId>lodms-web</artifactId>
-    <packaging>war</packaging>
+    <packaging>pom</packaging>
 
     <name>LODMS Web Application</name>
     <url>https://github.com/lodms/lodms-core</url>
@@ -42,6 +42,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>lodms-ckan-extractor</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>lodms-ods-transformers</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -12,7 +12,7 @@ public class SupportDialog extends Window {
 
     public SupportDialog() {
         super("Get Support");
-        Label aboutText = new Label("<div class=\"lodms_about\"><p><a href=\"http://joinup.ec.europa.eu/community/ods/description\">Get support.</a></p></div>",
+        Label aboutText = new Label("<p><a href=\"http://joinup.ec.europa.eu/community/ods/description\"><img src=\"/lodms/VAADIN/themes/lodms/support.png\" alt=\"get support\" /></a></p>",
                 Label.CONTENT_XHTML);
         VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
