@@ -241,7 +241,7 @@
                     </execution>
                 </executions>
             </plugin> -->
-            
+
         <!-- Updates Vaadin 6.2+ widgetset definitions based on project dependencies
             <plugin>
                 <groupId>com.vaadin</groupId>
