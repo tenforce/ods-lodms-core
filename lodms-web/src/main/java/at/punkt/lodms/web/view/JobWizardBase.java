@@ -92,7 +92,7 @@ public abstract class JobWizardBase extends VerticalLayout implements Dialog {
         initJobDialog(job);
         HorizontalLayout topDialog = new HorizontalLayout();
         topDialog.setWidth("100%");
-        Label trainingLabel = new Label("<a href=\"\"><img align=\"right\" src=\"/lodms/VAADIN/themes/lodms/onlinetraining.png\" /></a>", Label.CONTENT_XHTML);
+        Label trainingLabel = new Label("<a href=\"\"><img align=\"right\" width=\"300px\" src=\"/lodms/VAADIN/themes/lodms/onlinetraining.png\" /></a>", Label.CONTENT_XHTML);
         topDialog.addComponent(jobDialog);
         topDialog.addComponent(trainingLabel);
         topDialog.setComponentAlignment(trainingLabel, Alignment.TOP_RIGHT);

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>lodms</artifactId>
@@ -9,13 +10,13 @@
     </parent>
     <groupId>at.punkt.lodms</groupId>
     <artifactId>lodms-web-integration</artifactId>
-    
+
     <name>LODMS Web Integration</name>
     <url>https://github.com/lodms/lodms-core</url>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <vaadin.version>6.6.4</vaadin.version>
+        <vaadin.version>6.8.9</vaadin.version>
     </properties>
     <dependencies>
         <dependency>
