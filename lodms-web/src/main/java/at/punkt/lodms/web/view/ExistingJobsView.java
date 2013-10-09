@@ -27,7 +27,6 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalSplitPanel;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.TextArea;
@@ -84,26 +83,16 @@ public class ExistingJobsView extends HorizontalSplitPanel implements View {
     }
   }
 
-  @PostConstruct
-  public void init() {
-    beanContainer = new BeanItemContainer<Job>(Job.class, jobService.getJobs());
-    jobTable.setContainerDataSource(beanContainer);
-    jobTable.setVisibleColumns(new String[]{});
-    jobTable.addGeneratedColumn("Name", new Table.ColumnGenerator() {
-
-      @Override
-      public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
-        return new Label(((Job) itemId).getMetadata().getName());
-      }
-    });
-    jobTable.addGeneratedColumn("Interval", new Table.ColumnGenerator() {
-
-      @Override
-      public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
-        return new Label(((Job) itemId).getMetadata().getInterval());
-      }
-    });
-    jobTable.addGeneratedColumn("Status", new Table.ColumnGenerator() {
+    @PostConstruct
+    public void init() {
+        beanContainer = new BeanItemContainer<Job>(Job.class, jobService.getJobs());
+        beanContainer.addNestedContainerProperty("metadata.name");
+        beanContainer.addNestedContainerProperty("metadata.interval");
+        jobTable.setContainerDataSource(beanContainer);
+        jobTable.setColumnHeader("metadata.name","Name");
+        jobTable.setColumnHeader("metadata.interval","Interval");
+        jobTable.setVisibleColumns(new String[]{"metadata.name","metadata.interval"});
+        jobTable.addGeneratedColumn("Status", new Table.ColumnGenerator() {
 
       @Override
       public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
@@ -237,12 +226,13 @@ public class ExistingJobsView extends HorizontalSplitPanel implements View {
     refreshJobTable();
   }
 
-  private void refreshJobTable() {
-    beanContainer.removeAllItems();
-    beanContainer.addAll(jobService.getJobs());
-    jobTable.select(jobTable.getNullSelectionItemId());
-    jobInfo.removeAllComponents();
-  }
+    private void refreshJobTable() {
+        beanContainer.removeAllItems();
+        beanContainer.addAll(jobService.getJobs());
+        jobTable.sort(new Object[] {"metadata.name"},new boolean[] {true});
+        jobTable.select(jobTable.getNullSelectionItemId());
+        jobInfo.removeAllComponents();
+    }
 
   @Override
   public void postView() {
