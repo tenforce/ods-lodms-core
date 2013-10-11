@@ -6,7 +6,7 @@
     <parent>
         <artifactId>lodms</artifactId>
         <groupId>at.punkt.lodms</groupId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
     <groupId>at.punkt.lodms</groupId>
     <artifactId>lodms-web-integration</artifactId>

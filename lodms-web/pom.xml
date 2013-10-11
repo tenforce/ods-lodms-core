@@ -2,22 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <artifactId>lodms</artifactId>
-        <groupId>at.punkt.lodms</groupId>
-        <version>1.0.0</version>
-    </parent>
-
     <groupId>at.punkt.lodms</groupId>
     <artifactId>lodms-web</artifactId>
     <packaging>war</packaging>
-
+    <version>1.0.1</version>
     <name>LODMS Web Application</name>
     <url>https://github.com/lodms/lodms-core</url>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sesame.version>2.6.10</sesame.version>
+        <spring.version>3.1.2.RELEASE</spring.version>
+        <project.version>1.0.0</project.version>
+        <virtuoso-jdbc-driver.version>3.62</virtuoso-jdbc-driver.version>
+        <virtuoso-sesame-driver.version>2.6.10-build1.10</virtuoso-sesame-driver.version>
         <vaadin.version>6.8.9</vaadin.version>
     </properties>
 
@@ -26,44 +25,75 @@
             <id>vaadin-addons</id>
             <url>http://maven.vaadin.com/vaadin-addons</url>
         </repository>
+        <repository>
+            <id>com.springsource.repository.bundles.release</id>
+            <name>SpringSource Enterprise Bundle Repository - SpringSource Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/release</url>
+        </repository>
+        <repository>
+            <id>com.springsource.repository.bundles.external</id>
+            <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
+            <url>http://repository.springsource.com/maven/bundles/external</url>
+        </repository>
+
+        <repository>
+            <id>tenforce_archiva_external_free</id>
+            <url>http://archiva.tenforce.com/archiva/repository/external_free/</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>lodms-impl</artifactId>
-            <version>${project.version}</version>
+            <groupId>at.punkt.lodms</groupId>
+            <artifactId>lodms</artifactId>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>lodms-spi</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>ckan-extractor</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>lodms-ckan-extractor</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>multiple-sparql-updater</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>lodms-ods-transformers</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>dcat-valuemapper</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>lodms-virtuoso-connector</artifactId>
-            <version>${project.version}</version>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>ods-cleaner</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.openrdf.sesame</groupId>
-            <artifactId>sesame-repository-sail</artifactId>
-            <version>${sesame.version}</version>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>ods-dcat-harmonizer</artifactId>
+            <version>1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.openrdf.sesame</groupId>
-            <artifactId>sesame-sail-memory</artifactId>
-            <version>${sesame.version}</version>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>ods-vocabulary</artifactId>
+            <version>1.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>rdf-extractor</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>virtuoso-extractor</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>virtuoso-loader</artifactId>
+            <version>1.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -81,9 +111,9 @@
             <version>${spring.version}</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>at.punkt.lodms</groupId>
             <artifactId>lodms-web-integration</artifactId>
-            <version>${project.version}</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>
