@@ -51,7 +51,7 @@
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
             <artifactId>ckan-extractor</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
             <artifactId>dcat-valuemapper</artifactId>
-            <version>1.0</version>
+            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
@@ -71,11 +71,16 @@
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
             <artifactId>ods-dcat-harmonizer</artifactId>
-            <version>1.0</version>
+            <version>1.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
             <artifactId>ods-vocabulary</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>ods-modification-detector</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
