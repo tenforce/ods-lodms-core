@@ -50,20 +50,20 @@
             30
         </session-timeout>
     </session-config>
-    <!--<security-constraint>-->
-    <!--<web-resource-collection>-->
-    <!--<web-resource-name>-->
-    <!--Lod Management Suite-->
-    <!--</web-resource-name>-->
-    <!--<url-pattern>/*</url-pattern>-->
-    <!--</web-resource-collection>-->
-    <!--<auth-constraint>-->
-    <!--<role-name>lodms</role-name>-->
-    <!--</auth-constraint>-->
-    <!--</security-constraint>-->
-    <!--<login-config>-->
-    <!--&lt;!&ndash; pay attention: BASIC in insecure, use it only for test, search for a more secure method &ndash;&gt;-->
-    <!--<auth-method>BASIC</auth-method>-->
-    <!--<realm-name>Please login to use lodms</realm-name>-->
-    <!--</login-config>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>
+                Lod Management Suite
+            </web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>lodms</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <!-- pay attention: BASIC in insecure, use it only for test, search for a more secure method -->
+        <auth-method>BASIC</auth-method>
+        <realm-name>Please login to use lodms</realm-name>
+    </login-config>
 </web-app>

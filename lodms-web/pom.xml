@@ -2,20 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>at.punkt.lodms</groupId>
+
     <artifactId>lodms-web</artifactId>
+    <parent>
+        <groupId>at.punkt.lodms</groupId>
+        <artifactId>lodms</artifactId>
+        <version>1.0.1</version>
+    </parent>
     <packaging>war</packaging>
-    <version>1.0.1</version>
     <name>LODMS Web Application</name>
     <url>https://github.com/lodms/lodms-core</url>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sesame.version>2.6.10</sesame.version>
+        <sesame.version>2.7.3</sesame.version>
         <spring.version>3.1.2.RELEASE</spring.version>
         <project.version>1.0.0</project.version>
-        <virtuoso-jdbc-driver.version>3.62</virtuoso-jdbc-driver.version>
+        <virtuoso-jdbc-driver.version>4.0</virtuoso-jdbc-driver.version>
         <virtuoso-sesame-driver.version>2.6.10-build1.10</virtuoso-sesame-driver.version>
         <vaadin.version>6.8.9</vaadin.version>
     </properties>
@@ -44,11 +48,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>at.punkt.lodms</groupId>
-            <artifactId>lodms</artifactId>
-            <version>1.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>com.tenforce.lodms</groupId>
             <artifactId>ckan-extractor</artifactId>
             <version>1.0.2</version>
@@ -60,12 +59,22 @@
         </dependency>
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
+            <artifactId>ods-validator</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tenforce.lodms</groupId>
             <artifactId>dcat-valuemapper</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.4</version>
         </dependency>
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
             <artifactId>ods-cleaner</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>dcat-csv-extractor</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
@@ -75,18 +84,13 @@
         </dependency>
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
-            <artifactId>ods-vocabulary</artifactId>
-            <version>1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tenforce.lodms</groupId>
             <artifactId>ods-modification-detector</artifactId>
             <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
             <artifactId>rdf-extractor</artifactId>
-            <version>1.0</version>
+            <version>1.1</version>
         </dependency>
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
@@ -140,6 +144,18 @@
             <groupId>org.vaadin.addons</groupId>
             <artifactId>countdownclock</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-servlet</artifactId>
+            <version>2.6.0-rc3</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.gwt</groupId>
+            <artifactId>gwt-user</artifactId>
+            <version>2.6.0-rc3</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -223,13 +239,14 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
-            <!-- Compiles your custom GWT components with the GWT compiler
+            <!--&lt;!&ndash; Compiles your custom GWT components with the GWT compiler-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>2.6.0-rc3</version>
                 <configuration>
-                    <webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets</webappDirectory>
+                    <webappDirectory>${project.build.directory}/${project.build.finalName}/VAADIN/widgetsets
+                    </webappDirectory>
                     <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
                     <runTarget>clean</runTarget>
                     <hostedWebapp>${project.build.directory}/${project.build.finalName}</hostedWebapp>
@@ -237,17 +254,9 @@
                     <port>8084</port>
                     <soyc>false</soyc>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>resources</goal>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin> -->
+            </plugin>
 
-        <!-- Updates Vaadin 6.2+ widgetset definitions based on project dependencies
+            <!--&lt;!&ndash; Updates Vaadin 6.2+ widgetset definitions based on project dependencies-->
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
@@ -262,7 +271,7 @@
                     </execution>
                 </executions>
             </plugin>
-             -->
+            <!--&ndash;&gt;-->
         </plugins>
         <resources>
             <resource>

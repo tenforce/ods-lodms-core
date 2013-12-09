@@ -23,7 +23,6 @@ import at.punkt.lodms.spi.transform.TransformException;
 import at.punkt.lodms.spi.transform.TransformFailedEvent;
 import at.punkt.lodms.spi.transform.Transformer;
 import at.punkt.lodms.util.BatchedRdfInserter;
-import at.punkt.lodms.util.NoStartEndWrapper;
 import at.punkt.lodms.util.TripleCountingWrapper;
 import org.apache.log4j.Logger;
 import org.openrdf.model.URI;
@@ -113,6 +112,7 @@ public class ETLPipelineImpl implements ETLPipeline, ApplicationEventPublisherAw
         long pipelineStart = System.currentTimeMillis();
         String runId = generateRunId();
         final URI namedGraph = new URIImpl(id);
+        clearGraph(namedGraph);
         try {
             final Map<String, Object> customData = new HashMap<String, Object>();
             eventPublisher.publishEvent(new PipelineStartedEvent(this, runId, this));
@@ -134,10 +134,8 @@ public class ETLPipelineImpl implements ETLPipeline, ApplicationEventPublisherAw
 
     private void runExtractors(String runId, URI namedGraph, Map<String, Object> customData) throws RepositoryException, RDFHandlerException {
         final RepositoryConnection con = repository.getConnection();
-        con.setAutoCommit(false);
         RDFInserter inserter = new BatchedRdfInserter(con, 5000);
         inserter.enforceContext(namedGraph);
-        NoStartEndWrapper wrapper = new NoStartEndWrapper(inserter);
         try {
             for (Extractor extractor : extractors) {
                 if (extractor instanceof Disableable && ((Disableable) extractor).isDisabled()) {

@@ -10,6 +10,7 @@
     <modules>
         <module>lodms-spi</module>
         <module>lodms-web-integration</module>
+        <module>lodms-web</module>
     </modules>
 
     <build>
@@ -68,10 +69,10 @@
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sesame.version>2.6.10</sesame.version>
+        <sesame.version>2.7.3</sesame.version>
         <spring.version>3.1.2.RELEASE</spring.version>
         <project.version>1.0.0</project.version>
-        <virtuoso-jdbc-driver.version>3.62</virtuoso-jdbc-driver.version>
+        <virtuoso-jdbc-driver.version>4.0</virtuoso-jdbc-driver.version>
         <virtuoso-sesame-driver.version>2.6.10-build1.10</virtuoso-sesame-driver.version>
     </properties>
 </project>

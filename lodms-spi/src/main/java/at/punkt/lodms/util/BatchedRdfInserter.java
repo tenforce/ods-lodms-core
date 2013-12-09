@@ -37,7 +37,7 @@ public class BatchedRdfInserter extends RDFInserter {
     }
 
     @Override
-    public void handleStatement(Statement st) throws RDFHandlerException {
+    public synchronized void handleStatement(Statement st) throws RDFHandlerException {
         super.handleStatement(st);
         if (unCommittedTriples++ >= batchSize) {
             try {
