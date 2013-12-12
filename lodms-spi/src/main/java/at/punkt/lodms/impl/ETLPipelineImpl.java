@@ -23,6 +23,7 @@ import at.punkt.lodms.spi.transform.TransformException;
 import at.punkt.lodms.spi.transform.TransformFailedEvent;
 import at.punkt.lodms.spi.transform.Transformer;
 import at.punkt.lodms.util.BatchedRdfInserter;
+import at.punkt.lodms.util.NoStartEndWrapper;
 import at.punkt.lodms.util.TripleCountingWrapper;
 import org.apache.log4j.Logger;
 import org.openrdf.model.URI;
@@ -136,6 +137,7 @@ public class ETLPipelineImpl implements ETLPipeline, ApplicationEventPublisherAw
         final RepositoryConnection con = repository.getConnection();
         RDFInserter inserter = new BatchedRdfInserter(con, 5000);
         inserter.enforceContext(namedGraph);
+        NoStartEndWrapper wrapper = new NoStartEndWrapper(inserter);
         try {
             for (Extractor extractor : extractors) {
                 if (extractor instanceof Disableable && ((Disableable) extractor).isDisabled()) {
@@ -143,7 +145,7 @@ public class ETLPipelineImpl implements ETLPipeline, ApplicationEventPublisherAw
                 }
                 ExtractContext context = new ExtractContext(runId, customData);
                 context.setPipeline(this);
-                TripleCountingWrapper tripleCounter = new TripleCountingWrapper(inserter);
+                TripleCountingWrapper tripleCounter = new TripleCountingWrapper(wrapper);
                 try {
                     long start = System.currentTimeMillis();
                     extractor.extract(tripleCounter, context);
