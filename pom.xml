@@ -10,6 +10,7 @@
     <modules>
         <module>lodms-spi</module>
         <module>lodms-web-integration</module>
+	<module>ods-lodms-plugins</module>
         <module>lodms-web</module>
     </modules>
 
