@@ -48,10 +48,9 @@
             <name>SpringSource Enterprise Bundle Repository - External Bundle Releases</name>
             <url>http://repository.springsource.com/maven/bundles/external</url>
         </repository>
-
         <repository>
-            <id>tenforce_archiva_external_free</id>
-            <url>http://archiva.tenforce.com/archiva/repository/external_free/</url>
+            <id>linkeddata</id>
+            <url>http://mvn.linkeddata.org/content/groups/public/</url>
         </repository>
     </repositories>
 
