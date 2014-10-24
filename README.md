@@ -7,6 +7,7 @@ Management suite for automatic conversion, enrichment, caching and publishing of
  * a virtuoso RDF store
  * Java 6+
  * maven 3 (maven 2 untested)
+ * application server (tested with tomcat6)
 
 ## build package
 
