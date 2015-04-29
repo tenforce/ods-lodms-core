@@ -66,18 +66,13 @@ public class ErrorReportingView extends HorizontalSplitPanel implements View {
     @PostConstruct
     public void init() {
         beanContainer = new BeanItemContainer<Job>(Job.class, jobService.getJobs());
+        beanContainer.addNestedContainerProperty("metadata.name");
+        beanContainer.addNestedContainerProperty("metadata.interval");
         jobTable.setContainerDataSource(beanContainer);
-        jobTable.setVisibleColumns(new String[]{"id"});
+        jobTable.setColumnHeader("metadata.name","Name");
+        jobTable.setColumnHeader("metadata.interval","Interval");
+        jobTable.setVisibleColumns(new String[]{"id","metadata.name","metadata.interval"});
         jobTable.setColumnWidth("id", 225);
-        jobTable.addGeneratedColumn("Name", new Table.ColumnGenerator() {
-
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source, Object itemId, Object columnId) {
-                Label label = new Label(((Job) itemId).getMetadata().getName());
-                label.setDescription(((Job) itemId).getMetadata().getDescription());
-                return label;
-            }
-        });
         jobTable.setSizeFull();
         jobTable.setSelectable(true);
         jobTable.addListener(new ItemClickListener() {
@@ -103,6 +98,7 @@ public class ErrorReportingView extends HorizontalSplitPanel implements View {
         beanContainer.addAll(jobService.getJobs());
         jobInfo.removeAllComponents();
         jobTable.select(jobTable.getNullSelectionItemId());
+        jobTable.sort(new Object[] {"metadata.name"},new boolean[] {true});
         setSizeFull();
     }
 
