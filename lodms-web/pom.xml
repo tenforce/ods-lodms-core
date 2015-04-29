@@ -83,6 +83,11 @@
         </dependency>
         <dependency>
             <groupId>com.tenforce.lodms</groupId>
+            <artifactId>crip-api-extractor</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tenforce.lodms</groupId>
             <artifactId>ods-modification-detector</artifactId>
             <version>1.0</version>
         </dependency>
@@ -100,6 +105,11 @@
             <groupId>com.tenforce.lodms</groupId>
             <artifactId>virtuoso-loader</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tenforce.lodms</groupId>
+            <artifactId>web-translator</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -155,6 +165,11 @@
             <artifactId>gwt-user</artifactId>
             <version>2.6.0-rc3</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>at.punkt.lodms</groupId>
+            <artifactId>dcat-protocol-extractor</artifactId>
+            <version>1.0.1</version>
         </dependency>
     </dependencies>
 
